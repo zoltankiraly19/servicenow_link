@@ -2,7 +2,8 @@ from flask import Flask, request, redirect
 from flask_cors import CORS  # CORS importálása
 
 app = Flask(__name__)
-CORS(app)  # Alkalmazza a CORS-t az összes útvonalra
+# CORS engedélyezése a frontend domain-re
+CORS(app, resources={r"/*": {"origins": "https://serviclink.1f0o357viivn.us-south.codeengine.appdomain.cloud"}})
 
 @app.route('/', methods=['GET'])
 def open_link():
