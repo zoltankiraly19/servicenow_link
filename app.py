@@ -1,20 +1,17 @@
-from flask import Flask, request
-import webbrowser
-from flask_cors import CORS
+from flask import Flask, request, redirect
+from flask_cors import CORS  # CORS importálása
 
 app = Flask(__name__)
-CORS(app)
+CORS(app)  # Alkalmazza a CORS-t az összes útvonalra
 
 @app.route('/', methods=['GET'])
 def open_link():
-    # A felhasználó által megadott URL
-    url = request.args.get('url')  # URL paraméter a GET kérésben
+    url = request.args.get('url')
     if url:
-        # A webbrowser modul segítségével megnyitjuk a linket
-        webbrowser.open(url)
-        return f"Link opened in browser: {url}"
+        # HTTP átirányítás a megadott URL-re
+        return redirect(url, code=302)
     else:
-        return "No URL provided", 400  # Ha nincs URL paraméter
+        return "No URL provided", 400
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
